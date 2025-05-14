@@ -1,24 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
+import SecondsCounter from "./SecondsCounter";
 
-const SecondsCounter = ({ seconds }) => {
+const Home = () => {
+    const [seconds, setSeconds] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setSeconds(prev => prev + 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
-        <div className="big-counter d-flex justify-content-center align-items-center fs-1">
-            <div className="bg-dark text-white p-3 m-1 rounded">
-                <i className="fas fa-clock"></i>
-            </div>
-            <div className="bg-dark text-white p-3 m-1 rounded">{Math.floor(seconds / 100000) % 10}</div>
-            <div className="bg-dark text-white p-3 m-1 rounded">{Math.floor(seconds / 10000) % 10}</div>
-            <div className="bg-dark text-white p-3 m-1 rounded">{Math.floor(seconds / 1000) % 10}</div>
-            <div className="bg-dark text-white p-3 m-1 rounded">{Math.floor(seconds / 100) % 10}</div>
-            <div className="bg-dark text-white p-3 m-1 rounded">{Math.floor(seconds / 10) % 10}</div>
-            <div className="bg-dark text-white p-3 m-1 rounded">{seconds % 10}</div>
+        <div className="container mt-5">
+            <SecondsCounter seconds={seconds} />
         </div>
     );
 };
 
-SecondsCounter.propTypes = {
-    seconds: PropTypes.number
-};
-
-export default SecondsCounter;
+export default Home;
